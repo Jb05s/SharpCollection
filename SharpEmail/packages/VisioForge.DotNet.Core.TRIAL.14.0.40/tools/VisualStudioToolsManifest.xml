@@ -1,0 +1,49 @@
+<FileList>
+  <File Reference = "VisioForge.Controls.UI.dll">
+    <ToolboxItems UIFramework="WPF" VSCategory="VisioForge" BlendCategory="VisioForge">
+      <Item Type="VisioForge.Controls.UI.WPF.MediaPlayer" />
+      <Item Type="VisioForge.Controls.UI.WPF.VideoCapture" />
+      <Item Type="VisioForge.Controls.UI.WPF.VideoEdit" />
+      <Item Type="VisioForge.Controls.UI.WPF.VideoEditFFMPEG" />
+      <Item Type="VisioForge.Controls.UI.WPF.VolumeMeterPro.SpectrumAnalyzer" />
+      <Item Type="VisioForge.Controls.UI.WPF.VolumeMeterPro.VolumeMeter" />
+      <Item Type="VisioForge.Controls.UI.WPF.VolumeMeterPro.WaveformPainter" />
+    </ToolboxItems>
+  </File>
+
+  <File Reference = "VisioForge.Controls.UI.dll">
+    <ToolboxItems UIFramework="WinForms" VSCategory="VisioForge" BlendCategory="VisioForge">
+      <Item Type="VisioForge.Controls.UI.WinForms.MediaPlayer" />
+      <Item Type="VisioForge.Controls.UI.WinForms.VideoCapture" />
+      <Item Type="VisioForge.Controls.UI.WinForms.VideoEdit" />
+      <Item Type="VisioForge.Controls.UI.WinForms.VideoEditFFMPEG" />
+      <Item Type="VisioForge.Controls.UI.WinForms.VolumeMeterPro.VolumeMeter" />
+      <Item Type="VisioForge.Controls.UI.WinForms.VolumeMeterPro.WaveformPainter" />
+      <Item Type="VisioForge.Controls.UI.WinForms.PeakMeterCtrl" />
+    </ToolboxItems>
+  </File>
+
+  <File Reference = "VisioForge.Controls.UI.NetCore.dll">
+    <ToolboxItems UIFramework="WPF" VSCategory="VisioForge" BlendCategory="VisioForge">
+      <Item Type="VisioForge.Controls.UI.WPF.MediaPlayer" />
+      <Item Type="VisioForge.Controls.UI.WPF.VideoCapture" />
+      <Item Type="VisioForge.Controls.UI.WPF.VideoEdit" />
+      <Item Type="VisioForge.Controls.UI.WPF.VideoEditFFMPEG" />
+      <Item Type="VisioForge.Controls.UI.WPF.VolumeMeterPro.SpectrumAnalyzer" />
+      <Item Type="VisioForge.Controls.UI.WPF.VolumeMeterPro.VolumeMeter" />
+      <Item Type="VisioForge.Controls.UI.WPF.VolumeMeterPro.WaveformPainter" />
+    </ToolboxItems>
+  </File>
+
+  <File Reference = "VisioForge.Controls.UI.NetCore.dll">
+    <ToolboxItems UIFramework="WinForms" VSCategory="VisioForge" BlendCategory="VisioForge">
+      <Item Type="VisioForge.Controls.UI.WinForms.MediaPlayer" />
+      <Item Type="VisioForge.Controls.UI.WinForms.VideoCapture" />
+      <Item Type="VisioForge.Controls.UI.WinForms.VideoEdit" />
+      <Item Type="VisioForge.Controls.UI.WinForms.VideoEditFFMPEG" />
+      <Item Type="VisioForge.Controls.UI.WinForms.VolumeMeterPro.VolumeMeter" />
+      <Item Type="VisioForge.Controls.UI.WinForms.VolumeMeterPro.WaveformPainter" />
+      <Item Type="VisioForge.Controls.UI.WinForms.PeakMeterCtrl" />
+    </ToolboxItems>
+  </File>
+</FileList>
