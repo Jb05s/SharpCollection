@@ -38,7 +38,7 @@ namespace SharpSQL
             {
                 var commandFound = new CommandCollection().ExecuteCommand(commandName, parsedArgs);
 
-                // Show usage - if no commands were found
+                // Show usage - If no commands were found
                 if (commandFound == false)
                     Info.ShowUsage();
             }
@@ -51,7 +51,7 @@ namespace SharpSQL
 
         public static string MainString(string command)
         {
-            // Helper that executes an input string command and returns results as a string
+            // Helper that executes an input string command and returns results
             string[] args = command.Split();
 
             var parsed = ArgParser.Parse(args);
