@@ -1,0 +1,6 @@
+Z:\Module15\SharpSQL\SharpSQL\bin\x64\Release\SharpSQL.exe.config
+Z:\Module15\SharpSQL\SharpSQL\bin\x64\Release\SharpSQL.exe
+Z:\Module15\SharpSQL\SharpSQL\bin\x64\Release\SharpSQL.pdb
+Z:\Module15\SharpSQL\SharpSQL\obj\x64\Release\SharpSQL.csprojAssemblyReference.cache
+Z:\Module15\SharpSQL\SharpSQL\obj\x64\Release\SharpSQL.exe
+Z:\Module15\SharpSQL\SharpSQL\obj\x64\Release\SharpSQL.pdb
