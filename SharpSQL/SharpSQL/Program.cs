@@ -9,7 +9,7 @@ namespace SharpSQL
     {
         private static void FileExecute(string commandName, Dictionary<string, string> parsedArgs)
         {
-            // execute with stdout/stderr redirected to a file
+            // Execute with stdout/stderr redirected to a file
             string file = parsedArgs["/consoleoutfile"];
 
             TextWriter realStdOut = Console.Out;
@@ -32,15 +32,13 @@ namespace SharpSQL
 
         private static void MainExecute(string commandName, Dictionary<string, string> parsedArgs)
         {
-            // main execution logic
-
             Info.ShowLogo();
 
             try
             {
                 var commandFound = new CommandCollection().ExecuteCommand(commandName, parsedArgs);
 
-                // show the usage if no commands were found for the command name
+                // Show usage - if no commands were found
                 if (commandFound == false)
                     Info.ShowUsage();
             }
@@ -53,9 +51,7 @@ namespace SharpSQL
 
         public static string MainString(string command)
         {
-            // helper that executes an input string command and returns results as a string
-            //  useful for PSRemoting execution
-
+            // Helper that executes an input string command and returns results as a string
             string[] args = command.Split();
 
             var parsed = ArgParser.Parse(args);
@@ -91,7 +87,7 @@ namespace SharpSQL
 
         public static void Main(string[] args)
         {
-            // try to parse the command line arguments, show usage on failure and then bail
+            // Parse the command line arguments - Show usage on failure
             var parsed = ArgParser.Parse(args);
             if (parsed.ParsedOk == false)
             {
@@ -104,7 +100,7 @@ namespace SharpSQL
 
             if (parsed.Arguments.ContainsKey("/consoleoutfile"))
             {
-                // redirect output to a file specified
+                // Redirect output to a file specified
                 FileExecute(commandName, parsed.Arguments);
             }
             else

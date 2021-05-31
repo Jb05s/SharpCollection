@@ -12,13 +12,21 @@ namespace SharpSQL.Commands
         public void Execute(Dictionary<string, string> arguments)
         {
             Console.WriteLine("[*] Action: Retrieve Information on the SQL Login, Currently Mapped User, and Available User Roles\r\n");
-            Console.WriteLine("\tUsage: SharpSQL.exe getdbuser /db:DATABASE /server:SERVER [/impersonate]\r\n");
+            Console.WriteLine("\tUsage: SharpSQL.exe getdbuser /db:DATABASE /server:SERVER [/impersonate] [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string database = "";
             string connectserver = "";
+            string user = "";
+            string password = "";
+            string connectInfo = "";
 
+            bool sqlauth = false;
             bool impersonate = false;
 
+            if (arguments.ContainsKey("/sqlauth"))
+            {
+                sqlauth = true;
+            }
             if (arguments.ContainsKey("/db"))
             {
                 database = arguments["/db"];
@@ -43,7 +51,33 @@ namespace SharpSQL.Commands
                 return;
             }
 
-            string connectInfo = "Server = " + connectserver + "; Database = " + database + "; Integrated Security = True;";
+            if (sqlauth)
+            {
+                if (arguments.ContainsKey("/user"))
+                {
+                    user = arguments["/user"];
+                }
+                if (arguments.ContainsKey("/password"))
+                {
+                    password = arguments["/password"];
+                }
+                if (String.IsNullOrEmpty(user))
+                {
+                    Console.WriteLine("\r\n[X] You must supply the SQL account user!\r\n");
+                    return;
+                }
+                if (String.IsNullOrEmpty(password))
+                {
+                    Console.WriteLine("\r\n[X] You must supply the SQL account password!\r\n");
+                    return;
+                }
+                connectInfo = "Data Source= " + connectserver + "; Initial Catalog= " + database + "; User ID=" + user + "; Password=" + password;
+            }
+            else
+            {
+                connectInfo = "Server = " + connectserver + "; Database = " + database + "; Integrated Security = True;";
+            }
+
             SqlConnection connection = new SqlConnection(connectInfo);
 
             try

