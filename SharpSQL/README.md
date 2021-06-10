@@ -118,6 +118,8 @@
 
     [+] Authentication to the 'master' Database on 'web06' Successful!
 
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
     [10/06/21 2:23:49]
     (root💀jb05s)-[~/tools/Responder]
     └─# python3 ./Responder.py -I tun0                                                                
