@@ -74,6 +74,7 @@
     <Compile Include="Commands\linkedquery.cs" />
     <Compile Include="Commands\linkedxp.cs" />
     <Compile Include="Commands\ole.cs" />
+    <Compile Include="Commands\rpc.cs" />
     <Compile Include="Commands\xp.cs" />
     <Compile Include="Helpers\ArgParser.cs" />
     <Compile Include="Helpers\ArgParserResult.cs" />

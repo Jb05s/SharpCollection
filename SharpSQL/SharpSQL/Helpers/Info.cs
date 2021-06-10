@@ -47,6 +47,8 @@ MSSQL Linked Server Command Execution:
             SharpSQL.exe linkedquery /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
     [2] Execute Encoded PowerShell Command on Linked SQL Server via 'xp_cmdshell':
             SharpSQL.exe linkedxp /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
+    [3] Configure Linked SQL Server to Allow RPC connections:
+            SharpSQL.exe rpc /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
 
 MSSQL Double Linked Server Command Execution:
 
