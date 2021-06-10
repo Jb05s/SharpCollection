@@ -28,6 +28,7 @@
             SharpSQL.exe xp /db:DATABASE /server:SERVER /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
         [2] Execute Encoded PowerShell Command via 'Ole Automation Procedures':
             SharpSQL.exe ole /db:DATABASE /server:SERVER /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
+    
     MSSQL Linked Server Command Execution:
         [1] Execute Encoded PowerShell Command on Linked SQL Server via 'xp_cmdshell' with 'OPENQUERY':
             SharpSQL.exe linkedquery /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
@@ -35,6 +36,7 @@
             SharpSQL.exe linkedxp /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
         [3] Configure Linked SQL Server to Allow RPC connections:
             SharpSQL.exe rpc /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
+    
     MSSQL Double Linked Server Command Execution:
         [1] Execute Encoded PowerShell Command on a Double Linked SQL Server via 'xp_cmdshell':
             SharpSQL.exe dbllinkedxp /db:DATABASE /server:SERVER /intermediate:INTERMEDIATE /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
@@ -123,7 +125,7 @@
     [10/06/21 2:23:49]
     (root💀jb05s)-[~/tools/Responder]
     └─# python3 ./Responder.py -I eth0                                                               
-                                         __
+                                             __
       .----.-----.-----.-----.-----.-----.--|  |.-----.----.
       |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|
       |__| |_____|_____|   __|_____|__|__|_____||_____|__|
