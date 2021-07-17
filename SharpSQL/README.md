@@ -2,6 +2,8 @@
 
 ----
 
+SharpSQL is a C# tool for Microsoft SQL interaction and abuses. 
+
 ### Command Line Usage
 
 
