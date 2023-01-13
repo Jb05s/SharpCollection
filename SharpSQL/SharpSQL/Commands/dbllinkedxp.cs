@@ -134,6 +134,7 @@ namespace SharpSQL.Commands
             reader = command.ExecuteReader();
             reader.Read();
             Console.WriteLine("[*] Executing command..");
+            Console.WriteLine("[+] Command result: " + reader[0]);
             reader.Close();
 
             string disableXP = $"EXEC ('EXEC (''sp_configure ''''show advanced options'''', 0; RECONFIGURE;'') AT {target}') AT {intermediate}";
