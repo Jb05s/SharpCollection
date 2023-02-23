@@ -11,7 +11,7 @@ namespace SharpSQL.Commands
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Execute Encoded PowerShell Command via 'xp_cmdshell'");
+            Console.WriteLine("[*] Action: Execute Arbitrary Encoded PowerShell Command via 'xp_cmdshell':");
             Console.WriteLine("\tSharpSQL.exe xp /db:DATABASE /server:SERVER /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
@@ -107,7 +107,7 @@ namespace SharpSQL.Commands
             command = new SqlCommand(enableXP, connection);
             reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("[*] Enabling xp_cmdshell..");
+            Console.WriteLine("\n[*] Enabling xp_cmdshell..");
             reader.Close();
 
             string execCmd = $"EXEC xp_cmdshell 'powershell -enc {cmd}';";

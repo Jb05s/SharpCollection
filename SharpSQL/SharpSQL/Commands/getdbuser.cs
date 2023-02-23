@@ -11,7 +11,7 @@ namespace SharpSQL.Commands
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Retrieve Information on the SQL Login, Currently Mapped User, and Available User Roles\r\n");
+            Console.WriteLine("[*] Action: Retrieve Information on the SQL Login, Currently Mapped User, and Available User Roles:");
             Console.WriteLine("\tUsage: SharpSQL.exe getdbuser /db:DATABASE /server:SERVER [/impersonate] [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string database = "";
@@ -95,7 +95,7 @@ namespace SharpSQL.Commands
             SqlCommand command = new SqlCommand(queryLogin, connection);
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("[+] Logged in as: " + reader[0]);
+            Console.WriteLine("\n[+] Logged in as: " + reader[0]);
             reader.Close();
 
             string queryUser = "SELECT USER_NAME();";
@@ -113,11 +113,11 @@ namespace SharpSQL.Commands
             Int32 role = Int32.Parse(reader[0].ToString());
             if (role == 1)
             {
-                Console.WriteLine("[+] User is a member of the 'Public' role");
+                Console.WriteLine("[+] User is a Member of the 'Public' Role");
             }
             else
             {
-                Console.WriteLine("[-] User is not a member of the 'Public' role");
+                Console.WriteLine("[-] User is not a Member of the 'public' Role");
             }
             reader.Close();
 
@@ -129,11 +129,11 @@ namespace SharpSQL.Commands
             role = Int32.Parse(reader[0].ToString());
             if (role == 1)
             {
-                Console.WriteLine("[+] User is a member of the 'sysadmin' role");
+                Console.WriteLine("[+] User is a Member of the 'sysadmin' Role");
             }
             else
             {
-                Console.WriteLine("[-] User is not a member of the 'sysadmin' role");
+                Console.WriteLine("[-] User is not a Member of the 'sysadmin' Role");
             }
             reader.Close();
 
@@ -143,13 +143,13 @@ namespace SharpSQL.Commands
                 command = new SqlCommand(execAs, connection);
                 reader = command.ExecuteReader();
                 reader.Read();
-                Console.WriteLine("[*] Attempting impersonation..");
+                Console.WriteLine("\n[*] Attempting Impersonation..");
                 reader.Close();
 
                 command = new SqlCommand(queryUser, connection);
                 reader = command.ExecuteReader();
                 reader.Read();
-                Console.WriteLine("[+] Mapped to user: " + reader[0]);
+                Console.WriteLine("[+] Mapped to User: " + reader[0]);
                 reader.Close();
 
                 queryPubRole = "SELECT IS_SRVROLEMEMBER('public');";
@@ -160,11 +160,11 @@ namespace SharpSQL.Commands
                 role = Int32.Parse(reader[0].ToString());
                 if (role == 1)
                 {
-                    Console.WriteLine("[+] User is a member of the 'Public' role");
+                    Console.WriteLine("[+] User is a Member of the 'Public' Role");
                 }
                 else
                 {
-                    Console.WriteLine("[-] User is not a member of the 'Public' role");
+                    Console.WriteLine("[-] User is not a Member of the 'Public' Role");
                 }
                 reader.Close();
 
@@ -176,11 +176,11 @@ namespace SharpSQL.Commands
                 role = Int32.Parse(reader[0].ToString());
                 if (role == 1)
                 {
-                    Console.WriteLine("[+] User is a member of the 'sysadmin' role");
+                    Console.WriteLine("[+] User is a Member of the 'sysadmin' Role");
                 }
                 else
                 {
-                    Console.WriteLine("[-] User is not a member of the 'sysadmin' role");
+                    Console.WriteLine("[-] User is not a Member of the 'sysadmin' Role");
                 }
                 reader.Close();
 

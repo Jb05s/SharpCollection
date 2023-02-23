@@ -10,23 +10,23 @@ namespace SharpSQL.Commands
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Base64 encode string for '/command' switch");
-            Console.WriteLine("\tUsage: SharpSQL.exe encode /b64:STRING");
+            Console.WriteLine("[*] Action: Base64 Encode an Arbitrary String for the '/command' Switch:");
+            Console.WriteLine("\tUsage: SharpSQL.exe encode /b64:STRING\r\n");
 
-            string b64 = "";
+            string cmd = "";
 
-            if (arguments.ContainsKey("/b64"))
+            if (arguments.ContainsKey("/command"))
             {
-                b64 = arguments["/b64"];
+                cmd = arguments["/command"];
             }
 
-            if (String.IsNullOrEmpty(b64))
+            if (String.IsNullOrEmpty(cmd))
             {
                 Console.WriteLine("\r\n[X] You must supply a string!\r\n");
                 return;
             }
-            var encodeData = Encoding.Unicode.GetBytes(b64);
-			Console.WriteLine($"Base64 encoded string: {Convert.ToBase64String(encodeData)}");
+            var encodeData = Encoding.Unicode.GetBytes(cmd);
+			Console.WriteLine($"\nBase64 Encoded String: {Convert.ToBase64String(encodeData)}");
 
         }
     }

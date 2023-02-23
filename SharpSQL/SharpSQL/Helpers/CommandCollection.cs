@@ -28,8 +28,11 @@ namespace SharpSQL.Helpers
             _availableCommands.Add(dbllinkedxp.CommandName, () => new dbllinkedxp());
             _availableCommands.Add(linkedrpc.CommandName, () => new linkedrpc());
 			_availableCommands.Add(linkedlogin.CommandName, () => new linkedlogin());
-			_availableCommands.Add(linkedhash.CommandName, () => new linkedhash());
+			_availableCommands.Add(dbllinkedlogin.CommandName, () => new dbllinkedlogin());
 			_availableCommands.Add(encode.CommandName, () => new encode());
+			_availableCommands.Add(linkedhash.CommandName, () => new linkedhash());
+			_availableCommands.Add(linkedxplogin.CommandName, () => new linkedxplogin());
+			_availableCommands.Add(dbllinkedxplogin.CommandName, () => new dbllinkedxplogin());
 		}
 
         public bool ExecuteCommand(string commandName, Dictionary<string, string> arguments)

