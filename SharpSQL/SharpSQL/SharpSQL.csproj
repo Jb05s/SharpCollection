@@ -67,14 +67,17 @@
   <ItemGroup>
     <Compile Include="Commands\dbllinkedxp.cs" />
     <Compile Include="Commands\getdbuser.cs" />
+    <Compile Include="Commands\encode.cs" />
+    <Compile Include="Commands\linkedhash.cs" />
     <Compile Include="Commands\gethash.cs" />
     <Compile Include="Commands\getlinked.cs" />
     <Compile Include="Commands\getlogin.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\linkedquery.cs" />
+    <Compile Include="Commands\linkedlogin.cs" />
     <Compile Include="Commands\linkedxp.cs" />
     <Compile Include="Commands\ole.cs" />
-    <Compile Include="Commands\rpc.cs" />
+    <Compile Include="Commands\linkedrpc.cs" />
     <Compile Include="Commands\xp.cs" />
     <Compile Include="Helpers\ArgParser.cs" />
     <Compile Include="Helpers\ArgParserResult.cs" />

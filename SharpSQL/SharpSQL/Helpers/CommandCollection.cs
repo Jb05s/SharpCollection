@@ -26,8 +26,11 @@ namespace SharpSQL.Helpers
             _availableCommands.Add(linkedquery.CommandName, () => new linkedquery());
             _availableCommands.Add(linkedxp.CommandName, () => new linkedxp());
             _availableCommands.Add(dbllinkedxp.CommandName, () => new dbllinkedxp());
-            _availableCommands.Add(rpc.CommandName, () => new rpc());
-        }
+            _availableCommands.Add(linkedrpc.CommandName, () => new linkedrpc());
+			_availableCommands.Add(linkedlogin.CommandName, () => new linkedlogin());
+			_availableCommands.Add(linkedhash.CommandName, () => new linkedhash());
+			_availableCommands.Add(encode.CommandName, () => new encode());
+		}
 
         public bool ExecuteCommand(string commandName, Dictionary<string, string> arguments)
         {

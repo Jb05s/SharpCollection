@@ -5,9 +5,9 @@ using System.Data.SqlClient;
 
 namespace SharpSQL.Commands
 {
-    public class rpc : ICommand
+    public class linkedrpc : ICommand
     {
-        public static string CommandName => "rpc";
+        public static string CommandName => "linkedrpc";
 
         public void Execute(Dictionary<string, string> arguments)
         {
