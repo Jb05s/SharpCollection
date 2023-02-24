@@ -114,7 +114,8 @@ namespace SharpSQL.Commands
             command = new SqlCommand(execCmd, connection);
             reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("[+] Command result: " + reader[0]);
+			Console.WriteLine($"[*] Executing command on {connectserver}..");
+			Console.WriteLine("[+] Command result: " + reader[0]);
             reader.Close();
 
             string disableOle = "EXEC sp_configure 'show advanced options', 1; RECONFIGURE; EXEC sp_configure 'Ole Automation Procedures', 0; RECONFIGURE;";

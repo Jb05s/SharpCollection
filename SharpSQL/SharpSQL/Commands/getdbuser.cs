@@ -95,14 +95,14 @@ namespace SharpSQL.Commands
             SqlCommand command = new SqlCommand(queryLogin, connection);
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("\n[+] Logged in as: " + reader[0]);
+            Console.WriteLine("\n[+] Logged in as: " + reader[0] + $" on {connectserver}");
             reader.Close();
 
             string queryUser = "SELECT USER_NAME();";
             command = new SqlCommand(queryUser, connection);
             reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("[+] Mapped to user: " + reader[0]);
+            Console.WriteLine("[+] Mapped to user: " + reader[0] + $" on {connectserver}");
             reader.Close();
 
             string queryPubRole = "SELECT IS_SRVROLEMEMBER('public');";
@@ -149,7 +149,7 @@ namespace SharpSQL.Commands
                 command = new SqlCommand(queryUser, connection);
                 reader = command.ExecuteReader();
                 reader.Read();
-                Console.WriteLine("[+] Mapped to User: " + reader[0]);
+                Console.WriteLine("[+] Mapped to User: " + reader[0] + $" on {connectserver}");
                 reader.Close();
 
                 queryPubRole = "SELECT IS_SRVROLEMEMBER('public');";
