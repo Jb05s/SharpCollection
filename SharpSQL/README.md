@@ -89,7 +89,8 @@ SharpSQL is a C# tool for Microsoft SQL interaction and abuses.
 ![](../images/linkedxp.png)
 
 ### linkedrpc
-![](../images/linkedrpc.png)
+![](../images/disabled-linkedrpc.png)
+![](../images/enabled-linkedrpc.png)
 
 ### dbllinkedlogin
 ![](../images/dbllinkedlogin.png)
