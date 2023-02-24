@@ -12,7 +12,7 @@ namespace SharpSQL.Commands
         public void Execute(Dictionary<string, string> arguments)
         {
             Console.WriteLine("[*] Action: Execute Procedures to Get Login Information on Linked SQL Server:");
-            Console.WriteLine("\tUsage: SharpSQL.exe linkedxp /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
+            Console.WriteLine("\tUsage: SharpSQL.exe linkedlogin /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
             string password = "";

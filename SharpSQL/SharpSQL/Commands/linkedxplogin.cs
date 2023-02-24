@@ -12,7 +12,7 @@ namespace SharpSQL.Commands
         public void Execute(Dictionary<string, string> arguments)
         {
             Console.WriteLine("[*] Action: Execute Encoded PowerShell 'whoami' Command on Linked SQL Server via 'xp_cmdshell':");
-            Console.WriteLine("\tUsage: SharpSQL.exe linkedxp /db:DATABASE /server:SERVER /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
+            Console.WriteLine("\tUsage: SharpSQL.exe linkedxplogin /db:DATABASE /server:SERVER /target:TARGET [/sqlauth /user:SQLUSER /password:SQLPASSWORD]\r\n");
 
             string user = "";
             string password = "";
