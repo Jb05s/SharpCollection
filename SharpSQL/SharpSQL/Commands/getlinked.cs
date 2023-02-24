@@ -94,8 +94,9 @@ namespace SharpSQL.Commands
             {
                 Console.WriteLine("[*] Linked SQL server: " + reader[0]);
             }
-            reader.Close();
+            Console.WriteLine("\n");
 
+			reader.Close();
             connection.Close();
         }
     }

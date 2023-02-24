@@ -131,7 +131,7 @@ namespace SharpSQL.Commands
             command = new SqlCommand(disableXP, connection);
             reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("[*] Disabling xp_cmdshell..");
+            Console.WriteLine("[*] Disabling xp_cmdshell..\n");
             reader.Close();
 
             connection.Close();

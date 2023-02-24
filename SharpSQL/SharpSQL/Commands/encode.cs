@@ -26,7 +26,7 @@ namespace SharpSQL.Commands
                 return;
             }
             var encodeData = Encoding.Unicode.GetBytes(cmd);
-			Console.WriteLine($"\nBase64 Encoded String: {Convert.ToBase64String(encodeData)}");
+			Console.WriteLine($"Base64 Encoded String: {Convert.ToBase64String(encodeData)}\n");
 
         }
     }

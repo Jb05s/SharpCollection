@@ -144,7 +144,7 @@ namespace SharpSQL.Commands
 			command = new SqlCommand(dropProc, connection);
 			reader = command.ExecuteReader();
 			reader.Read();
-			Console.WriteLine("[*] Dropping Second Temporary Procedure..");
+			Console.WriteLine("[*] Dropping Second Temporary Procedure..\n");
 			reader.Close();
 
 			connection.Close();

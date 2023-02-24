@@ -129,11 +129,11 @@ namespace SharpSQL.Commands
             role = Int32.Parse(reader[0].ToString());
             if (role == 1)
             {
-                Console.WriteLine("[+] User is a Member of the 'sysadmin' Role");
+                Console.WriteLine("[+] User is a Member of the 'sysadmin' Role\n");
             }
             else
             {
-                Console.WriteLine("[-] User is not a Member of the 'sysadmin' Role");
+                Console.WriteLine("[-] User is not a Member of the 'sysadmin' Role\n");
             }
             reader.Close();
 
@@ -176,11 +176,11 @@ namespace SharpSQL.Commands
                 role = Int32.Parse(reader[0].ToString());
                 if (role == 1)
                 {
-                    Console.WriteLine("[+] User is a Member of the 'sysadmin' Role");
+                    Console.WriteLine("[+] User is a Member of the 'sysadmin' Role\n");
                 }
                 else
                 {
-                    Console.WriteLine("[-] User is not a Member of the 'sysadmin' Role");
+                    Console.WriteLine("[-] User is not a Member of the 'sysadmin' Role\n");
                 }
                 reader.Close();
 

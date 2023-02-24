@@ -107,7 +107,7 @@ namespace SharpSQL.Commands
             command = new SqlCommand(enableRPC, connection);
             reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine($"[*] Successfully Reconfigured {target} to Allow RPC Connections!");
+            Console.WriteLine($"[*] Successfully Reconfigured {target} to Allow RPC Connections!\n");
             reader.Close();
 
             connection.Close();

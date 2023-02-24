@@ -122,7 +122,7 @@ namespace SharpSQL.Commands
             command = new SqlCommand(disableOle, connection);
             reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("[*] Disabling OLE Automation Procedures..");
+            Console.WriteLine("[*] Disabling OLE Automation Procedures..\n");
             reader.Close();
 
             connection.Close();

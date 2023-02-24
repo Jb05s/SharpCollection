@@ -95,7 +95,7 @@ namespace SharpSQL.Commands
             SqlCommand command = new SqlCommand(queryLogin, connection);
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine("\n[+] Logged in as: " + reader[0] + $" on {connectserver}");
+            Console.WriteLine("\n[+] Logged in as: " + reader[0] + $" on {connectserver}\n");
             reader.Close();
 
             string queryImp = "SELECT distinct b.name FROM sys.server_permissions a INNER JOIN sys.server_principals b ON a.grantor_principal_id = b.principal_id WHERE a.permission_name = 'IMPERSONATE';";
@@ -103,7 +103,7 @@ namespace SharpSQL.Commands
             reader = command.ExecuteReader();
             while (reader.Read() == true)
             {
-                Console.WriteLine($"[*] Login that can be impersonated on {connectserver}: " + reader[0]);
+                Console.WriteLine("[*] Login that can be impersonated: " + reader[0] + "\n");
             }
             reader.Close();
 
@@ -119,7 +119,7 @@ namespace SharpSQL.Commands
                 command = new SqlCommand(queryLogin, connection);
                 reader = command.ExecuteReader();
                 reader.Read();
-                Console.WriteLine("[+] Logged in as: " + reader[0] + $" on {connectserver}");
+                Console.WriteLine("[+] Logged in as: " + reader[0] + $" on {connectserver}\n");
                 reader.Close();
 
                 connection.Close();

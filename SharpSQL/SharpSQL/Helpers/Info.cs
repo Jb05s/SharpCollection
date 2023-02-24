@@ -14,7 +14,7 @@ namespace SharpSQL.Helpers
             Console.WriteLine("     ██ ██   ██ ██   ██ ██   ██ ██           ██ ██ ▄▄ ██ ██      ");
             Console.WriteLine("███████ ██   ██ ██   ██ ██   ██ ██      ███████  ██████  ███████ ");
             Console.WriteLine("                                                    ▀▀           ");
-            Console.WriteLine("Written By: Jb05s | Version: 1.2.0 \r\n");
+            Console.WriteLine("Written By: Jb05s | Version: 1.2.0 (02/23/2023) \r\n");
 
 
 

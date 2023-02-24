@@ -100,14 +100,14 @@ namespace SharpSQL.Commands
 			SqlCommand command = new SqlCommand(createProc, connection);
 			SqlDataReader reader = command.ExecuteReader();
 			reader.Read();
-			Console.WriteLine("[*] Creating First Temporary Procedure..");
+			Console.WriteLine("\n[*] Creating First Temporary Procedure..");
 			reader.Close();
 
 			createProc = $"EXEC ('CREATE PROCEDURE whoisname AS SELECT USER_NAME();') AT [{target}]";
 			command = new SqlCommand(createProc, connection);
 			reader = command.ExecuteReader();
 			reader.Read();
-			Console.WriteLine("\n[*] Creating First Temporary Procedure..");
+			Console.WriteLine("[*] Creating Second Temporary Procedure..");
 			reader.Close();
 
 			string whoisuser = $"EXEC ('EXEC whoisuser') AT [{target}]";
@@ -135,7 +135,7 @@ namespace SharpSQL.Commands
 			command = new SqlCommand(dropProc, connection);
 			reader = command.ExecuteReader();
 			reader.Read();
-			Console.WriteLine("[*] Dropping Second Temporary Procedure..");
+			Console.WriteLine("[*] Dropping Second Temporary Procedure..\n");
             reader.Close();
 
 			connection.Close();
