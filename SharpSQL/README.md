@@ -59,11 +59,11 @@ SharpSQL is a C# tool for Microsoft SQL interaction and abuses.
                 SharpSQL.exe dbllinkedxp /db:DATABASE /server:SERVER /intermediate:INTERMEDIATE /target:TARGET /command:COMMAND [/sqlauth /user:SQLUSER /password:SQLPASSWORD]
 
 ### getlogin
-![](../images/getlogin.png)
+![](../images/getlogin-winauth.png)
 ![](../images/getlogin-sqlauth.png)
 
 ### getdbuser
-![](../images/getdbuser.png)
+![](../images/getdbuser-winauth.png)
 ![](../images/getdbuser-sqlauth.png)
 
 ### gethash
