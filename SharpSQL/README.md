@@ -12,7 +12,7 @@ SharpSQL is a C# tool for Microsoft SQL interaction and abuses.
          ██ ██   ██ ██   ██ ██   ██ ██           ██ ██ ▄▄ ██ ██
     ███████ ██   ██ ██   ██ ██   ██ ██      ███████  ██████  ███████
                                                         ▀▀
-    Written By: Jb05s | Version: 1.2.0 (02/23/2023)
+    Written By: Jb05s | Version: 1.3.0 (07/13/2023)
 
     MSSQL Authenticated Server Enumeration and Impersonation:
 
