@@ -1,0 +1,8 @@
+C:\Users\Jb05s\Documents\GitHub\SharpCollection\SharpSQL\SharpSQL\bin\x64\Release\SharpSQL.exe.config
+C:\Users\Jb05s\Documents\GitHub\SharpCollection\SharpSQL\SharpSQL\bin\x64\Release\SharpSQL.exe
+C:\Users\Jb05s\Documents\GitHub\SharpCollection\SharpSQL\SharpSQL\bin\x64\Release\SharpSQL.pdb
+C:\Users\Jb05s\Documents\GitHub\SharpCollection\SharpSQL\SharpSQL\obj\x64\Release\SharpSQL.csproj.AssemblyReference.cache
+C:\Users\Jb05s\Documents\GitHub\SharpCollection\SharpSQL\SharpSQL\obj\x64\Release\SharpSQL.csproj.SuggestedBindingRedirects.cache
+C:\Users\Jb05s\Documents\GitHub\SharpCollection\SharpSQL\SharpSQL\obj\x64\Release\SharpSQL.csproj.CoreCompileInputs.cache
+C:\Users\Jb05s\Documents\GitHub\SharpCollection\SharpSQL\SharpSQL\obj\x64\Release\SharpSQL.exe
+C:\Users\Jb05s\Documents\GitHub\SharpCollection\SharpSQL\SharpSQL\obj\x64\Release\SharpSQL.pdb

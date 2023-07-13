@@ -68,8 +68,8 @@
     <Compile Include="Commands\dbllinkedlogin.cs" />
     <Compile Include="Commands\dbllinkedxplogin.cs" />
     <Compile Include="Commands\dbllinkedxp.cs" />
-    <Compile Include="Commands\getdbuser.cs" />
     <Compile Include="Commands\encode.cs" />
+    <Compile Include="Commands\getdbuser.cs" />
     <Compile Include="Commands\gethash.cs" />
     <Compile Include="Commands\getlinked.cs" />
     <Compile Include="Commands\getlogin.cs" />

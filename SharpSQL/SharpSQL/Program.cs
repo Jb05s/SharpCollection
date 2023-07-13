@@ -44,8 +44,9 @@ namespace SharpSQL
             }
             catch (Exception e)
             {
-                Console.WriteLine("\r\n[!] Unhandled SharpSQL exception:\r\n");
-                Console.WriteLine(e);
+                Console.WriteLine("\r\n[!] Unhandled SharpSQL exception:");
+                Console.WriteLine(e.Message.ToString());
+                Console.WriteLine("\r\n");
             }
         }
 
